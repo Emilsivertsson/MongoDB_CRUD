@@ -9,7 +9,9 @@ import org.bson.Document;
 
 public class DbHandler {
 
-    String connectionString = "mongodb+srv://emilsivertsson:<password>@homecluster.ekna2wp.mongodb.net/?retryWrites=true&w=majority";
+    Keyreader keyreader = new Keyreader("Pass");
+    String connectionString = "mongodb+srv://emilsivertsson:"+keyreader.getPasscode()+"@homecluster.ekna2wp.mongodb.net/?retryWrites=true&w=majority";
+
 
 }
 

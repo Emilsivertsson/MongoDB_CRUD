@@ -20,17 +20,13 @@ public class Keyreader {
             System.out.println(e.getMessage());
         }
 
-
-
     }
-    public String getAPIkey(){
+    public String getPasscode(){
         //läs nycklen som finns i filen
         return props.getProperty("Pass");
 
     }
 
-    public String getKey(String key){
-        return props.getProperty(key);
-    }
+
 }
 
