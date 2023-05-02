@@ -3,16 +3,16 @@ import java.util.Scanner;
 
 public class Application {
 
-    Keyreader keyreader = new Keyreader("Pass");
-    String connectionString = "mongodb+srv://emilsivertsson:"+keyreader.getPasscode()+"@homecluster.ekna2wp.mongodb.net/?retryWrites=true&w=majority";
     Scanner scanner = new Scanner(System.in);
-    DbHandler dbHandler = new DbHandler(connectionString);
+
+    MongoFacade mongoFacade = new MongoFacade();
 
     public void start(){
         boolean run = true;
-        Menu.mainMenu();
-        int choice = Integer.parseInt(scanner.nextLine());
+
         while (run){
+            Menu.mainMenu();
+            int choice = Integer.parseInt(scanner.nextLine());
             switch(choice){
                 case 1:
                     addCustomer();
@@ -47,11 +47,11 @@ public class Application {
     }
 
     private void listAllEmployees() {
-        //MongoFacade.listAllEmployees();
+        mongoFacade.listAllEmployees();
     }
 
     private void listAllCustomers() {
-        //MongoFacade.listAllCustomers();
+        mongoFacade.listAllCustomers();
     }
 
     private void updateEmployees() {
@@ -72,10 +72,48 @@ public class Application {
     }
 
     private void addEmployee() {
-        //MongoFacade.addEmployee();
+        boolean add = true;
+        while (add){
+            System.out.println("Enter name: ");
+            String name = scanner.nextLine();
+            System.out.println("Enter age: ");
+            int age = Integer.parseInt(scanner.nextLine());
+            System.out.println("Enter address: ");
+            String address = scanner.nextLine();
+            System.out.println("Enter employee id: ");
+            int employeeId = Integer.parseInt(scanner.nextLine());
+            Employee emp = new Employee(name, age, address, employeeId);
+            mongoFacade.addEmployee(emp);
+            System.out.println("Add another employee? (y/n)");
+            String answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("n")){
+                add = false;
+            }
+        }
+
+
     }
 
     private void addCustomer() {
-        //MongoFacade.addCustomer();
+        boolean add = true;
+        while (add){
+            System.out.println("Enter name: ");
+            String name = scanner.nextLine();
+            System.out.println("Enter age: ");
+            int age = Integer.parseInt(scanner.nextLine());
+            System.out.println("Enter address: ");
+            String address = scanner.nextLine();
+            System.out.println("Enter employee id: ");
+            int customerId = Integer.parseInt(scanner.nextLine());
+            Customer cust = new Customer(name, age, address, customerId);
+            mongoFacade.addCustomer(cust);
+            System.out.println("Add another customer? (y/n)");
+            String answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("n")){
+                add = false;
+            }
+        }
+
+
     }
 }
