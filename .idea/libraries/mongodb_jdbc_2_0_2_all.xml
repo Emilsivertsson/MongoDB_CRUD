@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mongodb-jdbc-2.0.2-all">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/mongodb-jdbc-2.0.2-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

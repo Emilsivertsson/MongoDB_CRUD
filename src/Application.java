@@ -1,9 +1,12 @@
-import javax.persistence.criteria.CriteriaBuilder;
+
 import java.util.Scanner;
 
 public class Application {
+
+    Keyreader keyreader = new Keyreader("Pass");
+    String connectionString = "mongodb+srv://emilsivertsson:"+keyreader.getPasscode()+"@homecluster.ekna2wp.mongodb.net/?retryWrites=true&w=majority";
     Scanner scanner = new Scanner(System.in);
-    DbHandler dbHandler = new DbHandler();
+    DbHandler dbHandler = new DbHandler(connectionString);
 
     public void start(){
         boolean run = true;
@@ -44,35 +47,35 @@ public class Application {
     }
 
     private void listAllEmployees() {
-        MongoFacade.listAllEmployees();
+        //MongoFacade.listAllEmployees();
     }
 
     private void listAllCustomers() {
-        MongoFacade.listAllCustomers();
+        //MongoFacade.listAllCustomers();
     }
 
     private void updateEmployees() {
-        MongoFacade.updateEmployees();
+        //MongoFacade.updateEmployees();
     }
 
     private void updateCustomer() {
-        MongoFacade.updateCustomer();
+        //MongoFacade.updateCustomer();
 
     }
 
     private void deleteEmployees() {
-        MongoFacade.deleteEmployees();
+        //MongoFacade.deleteEmployees();
     }
 
     private void deleteCustomer() {
-        MongoFacade.deleteCustomer();
+        //MongoFacade.deleteCustomer();
     }
 
     private void addEmployee() {
-        MongoFacade.addEmployee();
+        //MongoFacade.addEmployee();
     }
 
     private void addCustomer() {
-        MongoFacade.addCustomer();
+        //MongoFacade.addCustomer();
     }
 }
