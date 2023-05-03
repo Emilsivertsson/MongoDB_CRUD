@@ -13,35 +13,19 @@ public class Application {
         while (run){
             Menu.mainMenu();
             int choice = Integer.parseInt(scanner.nextLine());
-            switch(choice){
-                case 1:
-                    addCustomer();
-                    break;
-                case 2:
-                    addEmployee();
-                    break;
-                case 3:
-                    deleteCustomer();
-                    break;
-                case 4:
-                    deleteEmployees();
-                    break;
-                case 5:
-                    updateCustomer();
-                    break;
-                case 6:
-                    updateEmployees();
-                    break;
-                case 7:
-                    listAllCustomers();
-                    break;
-                case 8:
-                    listAllEmployees();
-                    break;
-                case 9:
+            switch (choice) {
+                case 1 -> addCustomer();
+                case 2 -> addEmployee();
+                case 3 -> deleteCustomer();
+                case 4 -> deleteEmployees();
+                case 5 -> updateCustomer();
+                case 6 -> updateEmployees();
+                case 7 -> listAllCustomers();
+                case 8 -> listAllEmployees();
+                case 9 -> {
                     Menu.exit();
                     run = false;
-                    break;
+                }
             }
         }
     }
@@ -105,7 +89,6 @@ public class Application {
     private void addEmployee() {
         boolean add = true;
         while (add) {
-            String answer = null;
             try {
                 System.out.println("Enter name: ");
                 String name = scanner.nextLine();
@@ -124,7 +107,7 @@ public class Application {
 
             System.out.println("Employee added");
             System.out.println("Add another employee? (y/n)");
-            answer = scanner.nextLine();
+            String answer = scanner.nextLine();
             if (answer.equalsIgnoreCase("n")) {
                 add = false;
             }

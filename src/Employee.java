@@ -2,7 +2,7 @@ import org.bson.Document;
 
 public class Employee extends Person{
 
-    private int employeeId;
+    private final int employeeId;
     public Employee(String name, int age, String address, int employeeId) {
         super(name, age, address);
         this.employeeId = employeeId;
@@ -12,9 +12,6 @@ public class Employee extends Person{
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
 
     public Document toDocument(){
         return new Document("name", getName())

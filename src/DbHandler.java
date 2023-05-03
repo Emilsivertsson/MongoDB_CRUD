@@ -3,8 +3,6 @@ import com.mongodb.*;
 import com.mongodb.client.*;
 import com.mongodb.client.MongoClient;
 import org.bson.Document;
-import org.bson.conversions.Bson;
-
 
 public class DbHandler {
 
@@ -23,6 +21,9 @@ public class DbHandler {
     }
 
     public void Connect(String connString, String myDatabase) {
+        if (connString == null) {
+            connString = "mongodb://localhost:27017";
+        }
 
         //berätta för mongodb vilken version av server api vi använder
         ServerApi serverApi = ServerApi.builder()
@@ -39,11 +40,8 @@ public class DbHandler {
 
         // Create a new client and connect to the server med en factory method
         MongoClient mongoClient = MongoClients.create(settings);
+        db = mongoClient.getDatabase("Person");
 
-        // Send a ping to confirm a successful connection
-        db = mongoClient.getDatabase(myDatabase);
-
-        System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
     }
 
     //hämtar en collection, om man vill använda fler än en collection, så behöver man fler instancer
@@ -87,10 +85,7 @@ public class DbHandler {
         if(amount == 0){
         //skicka in personen i collection
         collection.insertOne(newemployee);
-
         }
-
-
     }
 
     public void printAllCostumers() {
