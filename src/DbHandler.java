@@ -79,13 +79,9 @@ public class DbHandler {
                 .append("age", person.getAge())
                 .append("adress", person.getAddress())
                 .append("employeeid", person.getEmployeeId());
-
-        //kolla om personen redan finns i collection
-        long amount = collection.countDocuments(newemployee);
-        if(amount == 0){
         //skicka in personen i collection
         collection.insertOne(newemployee);
-        }
+
     }
 
     public void printAllCostumers() {

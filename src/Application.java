@@ -99,6 +99,7 @@ public class Application {
                 System.out.println("Enter employee id: ");
                 int employeeId = Integer.parseInt(scanner.nextLine());
                 Employee emp = new Employee(name, age, address, employeeId);
+                //TODO kolla så inte id redan finns
                 mongoFacade.addEmployee(emp);
             } catch (Exception e) {
                 System.out.println("Invalid input, please try again");
@@ -129,6 +130,7 @@ public class Application {
                 System.out.println("Enter customer id: ");
                 int customerId = Integer.parseInt(scanner.nextLine());
                 Customer cust = new Customer(name, age, address, customerId);
+                //TODO kolla så inte id redan finns
                 mongoFacade.addCustomer(cust);
             } catch (Exception e){
                 System.out.println("Invalid input, please try again");
