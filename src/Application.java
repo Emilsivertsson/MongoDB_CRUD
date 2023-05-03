@@ -55,38 +55,77 @@ public class Application {
     }
 
     private void updateEmployees() {
-        //MongoFacade.updateEmployees();
+        mongoFacade.listAllEmployees();
+        System.out.println("Enter employee id that you want to update: ");
+        int employeeid = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter new name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter new age: ");
+        int age = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter new address: ");
+        String address = scanner.nextLine();
+        Employee employee = new Employee(name, age, address, employeeid);
+        mongoFacade.updateEmployees(employeeid, employee);
     }
 
     private void updateCustomer() {
-        //MongoFacade.updateCustomer();
+        mongoFacade.listAllCustomers();
+        System.out.println("Enter customer id that you want to update: ");
+        int customerId = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter new name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter new age: ");
+        int age = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter new address: ");
+        String address = scanner.nextLine();
+        Customer customer = new Customer(name, age, address, customerId);
+        mongoFacade.updateCustomer(customerId, customer);
+
 
     }
 
     private void deleteEmployees() {
-        //MongoFacade.deleteEmployees();
+        mongoFacade.listAllEmployees();
+        System.out.println("Enter employee id that you want to delete: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        mongoFacade.deleteEmployees(id);
+        System.out.println("Employee deleted");
     }
 
     private void deleteCustomer() {
-        //MongoFacade.deleteCustomer();
+        mongoFacade.listAllCustomers();
+        System.out.println("Enter customer id that you want to delete: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        mongoFacade.deleteCustomer(id);
+        System.out.println("Customer deleted");
     }
 
     private void addEmployee() {
         boolean add = true;
-        while (add){
-            System.out.println("Enter name: ");
-            String name = scanner.nextLine();
-            System.out.println("Enter age: ");
-            int age = Integer.parseInt(scanner.nextLine());
-            System.out.println("Enter address: ");
-            String address = scanner.nextLine();
-            System.out.println("Enter employee id: ");
-            int employeeId = Integer.parseInt(scanner.nextLine());
-            Employee emp = new Employee(name, age, address, employeeId);
-            mongoFacade.addEmployee(emp);
+        while (add) {
+            String answer = null;
+            try {
+                System.out.println("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.println("Enter age: ");
+                int age = Integer.parseInt(scanner.nextLine());
+                System.out.println("Enter address: ");
+                String address = scanner.nextLine();
+                System.out.println("Enter employee id: ");
+                int employeeId = Integer.parseInt(scanner.nextLine());
+                Employee emp = new Employee(name, age, address, employeeId);
+                mongoFacade.addEmployee(emp);
+            } catch (Exception e) {
+                System.out.println("Invalid input, please try again");
+                break;
+            }
+
+            System.out.println("Employee added");
             System.out.println("Add another employee? (y/n)");
-            String answer = scanner.nextLine();
-            if (answer.equalsIgnoreCase("n")){
+            answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("n")) {
                 add = false;
             }
         }
@@ -97,16 +136,22 @@ public class Application {
     private void addCustomer() {
         boolean add = true;
         while (add){
-            System.out.println("Enter name: ");
-            String name = scanner.nextLine();
-            System.out.println("Enter age: ");
-            int age = Integer.parseInt(scanner.nextLine());
-            System.out.println("Enter address: ");
-            String address = scanner.nextLine();
-            System.out.println("Enter employee id: ");
-            int customerId = Integer.parseInt(scanner.nextLine());
-            Customer cust = new Customer(name, age, address, customerId);
-            mongoFacade.addCustomer(cust);
+            try {
+                System.out.println("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.println("Enter age: ");
+                int age = Integer.parseInt(scanner.nextLine());
+                System.out.println("Enter address: ");
+                String address = scanner.nextLine();
+                System.out.println("Enter customer id: ");
+                int customerId = Integer.parseInt(scanner.nextLine());
+                Customer cust = new Customer(name, age, address, customerId);
+                mongoFacade.addCustomer(cust);
+            } catch (Exception e){
+                System.out.println("Invalid input, please try again");
+                break;
+            }
+            System.out.println("Customer added");
             System.out.println("Add another customer? (y/n)");
             String answer = scanner.nextLine();
             if (answer.equalsIgnoreCase("n")){

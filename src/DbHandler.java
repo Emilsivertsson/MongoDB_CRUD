@@ -2,12 +2,9 @@
 import com.mongodb.*;
 import com.mongodb.client.*;
 import com.mongodb.client.MongoClient;
-import org.bson.BsonDocument;
-import org.bson.BsonInt64;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.List;
 
 public class DbHandler {
 
@@ -56,7 +53,7 @@ public class DbHandler {
 
     public void insertCustomer(Customer person) {
         //kolla om collection är null, om den är det, så skapa en ny connection
-        if (collection == null || collection.equals("Anställd")) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")) {
             getCollection("Kund");
         }
         //ska en ny person och lägg till datan
@@ -70,13 +67,13 @@ public class DbHandler {
         if(amount == 0){
         //skicka in personen i collection
         collection.insertOne(newCustomer);
-        System.out.println("Customer added");
+
         }
     }
 
     public void insertEmployee(Employee person) {
         //kolla om collection är null, om den är det, så skapa en ny connection
-        if (collection == null || collection.equals("Kund")) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")) {
             getCollection("Anställd");
         }
         //ska en ny person och lägg till datan
@@ -90,14 +87,14 @@ public class DbHandler {
         if(amount == 0){
         //skicka in personen i collection
         collection.insertOne(newemployee);
-        System.out.println("Employee added");
+
         }
 
 
     }
 
     public void printAllCostumers() {
-        if (collection == null) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")){
             getCollection("Kund");
         }
 
@@ -113,7 +110,7 @@ public class DbHandler {
     }
 
     public void printAllEmployees() {
-        if (collection == null) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
             getCollection("Anställd");
         }
 
@@ -125,6 +122,38 @@ public class DbHandler {
             System.out.println(res.toJson());
 
         }
+    }
+
+    public void deleteEmployee(int employeeId) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
+            getCollection("Anställd");
+        }
+        Document doc = new Document("employeeid", employeeId);
+        collection.findOneAndDelete(doc);
+    }
+
+    public void deleteCustomer(int customerid) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")) {
+            getCollection("Kund");
+        }
+        Document doc = new Document("customerId", customerid);
+        collection.findOneAndDelete(doc);
+    }
+
+    public void updateEmployee(int employeeid, Employee employee) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
+            getCollection("Anställd");
+        }
+        Document doc = new Document("employeeid", employeeid);
+        collection.replaceOne(doc, employee.toDocument());
+    }
+
+    public void updateCustomer(int customerId, Customer customer) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")){
+            getCollection("Kund");
+        }
+        Document doc = new Document("customerId", customerId);
+        collection.replaceOne(doc, customer.toDocument());
     }
 }
 
