@@ -12,4 +12,4 @@ School weekly challange
 
 + db.collection.findOneAndDelete() - takes a filter object and deletes its matching document.
 
-+db.getCollection('collectionName') - Gets a collection from the database.
++ db.getCollection('collectionName') - Gets a collection from the database.
