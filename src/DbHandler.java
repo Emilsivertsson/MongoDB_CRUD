@@ -6,7 +6,6 @@ import org.bson.Document;
 
 public class DbHandler {
 
-
     MongoDatabase db = null;
 
     MongoCollection<Document> collection = null;
@@ -20,101 +19,103 @@ public class DbHandler {
         Connect(connString, dbname);
     }
 
+    /**
+     * @param connString inputs connection string
+     * @param myDatabase inputs name of database
+     *                   Connects to the database
+     */
     public void Connect(String connString, String myDatabase) {
         if (connString == null) {
             connString = "mongodb://localhost:27017";
         }
 
-        //berätta för mongodb vilken version av server api vi använder
+        //tells mongodb which version of server api we are using
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
 
-        //vi skapar en ny connection
+        //sets the settings for the connection
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(new ConnectionString(connString))
-                //vilket api vi vill ha
                 .serverApi(serverApi)
-                //designpattern builder
                 .build();
 
-        // Create a new client and connect to the server med en factory method
+        // Create a new client and with the settings and connect to the server and our database
         MongoClient mongoClient = MongoClients.create(settings);
         db = mongoClient.getDatabase("Person");
 
     }
 
-    //hämtar en collection, om man vill använda fler än en collection, så behöver man fler instancer
+    /**
+     * @param collectionName inputs name of collection you want to fetch
+     * sets collection to the collection you want to fetch
+     */
     public void getCollection(String collectionName) {
         collection = db.getCollection(collectionName);
     }
 
+    /**
+     * @param person inputs a Customer object
+     *               into the Kund collection
+     */
     public void insertCustomer(Customer person) {
-        //kolla om collection är null, om den är det, så skapa en ny connection
         if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")) {
             getCollection("Kund");
         }
-        //ska en ny person och lägg till datan
         Document newCustomer = new Document("name", person.getName())
                 .append("age", person.getAge())
                 .append("adress", person.getAddress())
                 .append("customerId", person.getCustomerId());
-
-        //kolla om personen redan finns i collection
-        long amount = collection.countDocuments(newCustomer);
-        if(amount == 0){
-        //skicka in personen i collection
         collection.insertOne(newCustomer);
-
-        }
     }
 
+    /**
+     * @param person inputs an Employee object
+     *               into the Anställd collection
+     */
     public void insertEmployee(Employee person) {
-        //kolla om collection är null, om den är det, så skapa en ny connection
         if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")) {
             getCollection("Anställd");
         }
-        //ska en ny person och lägg till datan
         Document newemployee = new Document("name", person.getName())
                 .append("age", person.getAge())
                 .append("adress", person.getAddress())
                 .append("employeeid", person.getEmployeeId());
-        //skicka in personen i collection
-        collection.insertOne(newemployee);
 
+        collection.insertOne(newemployee);
     }
 
+    /**
+     *  sets the correct collection and prints all documents in that collection
+     */
     public void printAllCostumers() {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")){
             getCollection("Kund");
         }
-
-        //hämta alla i collection
         FindIterable<Document> result = collection.find();
-
-        //skriv ut alla i collection
         for (Document res : result) {
             System.out.println(res.toJson());
-
         }
-
     }
 
+    /**
+     *  sets the correct collection and prints all documents in that collection
+     */
     public void printAllEmployees() {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
             getCollection("Anställd");
         }
-
-        //hämta alla i collection
         FindIterable<Document> result = collection.find();
-
-        //skriv ut alla i collection
         for (Document res : result) {
             System.out.println(res.toJson());
-
         }
     }
 
+
+    /**
+     * @param employeeId inputs an employeeId
+     *                   sets the correct collection and deletes the document with the same employeeId
+     */
     public void deleteEmployee(int employeeId) {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
             getCollection("Anställd");
@@ -123,6 +124,10 @@ public class DbHandler {
         collection.findOneAndDelete(doc);
     }
 
+    /**
+     * @param customerid inputs a customerId
+     *                   sets the correct collection and deletes the document with the same customerId
+     */
     public void deleteCustomer(int customerid) {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")) {
             getCollection("Kund");
@@ -131,6 +136,12 @@ public class DbHandler {
         collection.findOneAndDelete(doc);
     }
 
+    /**
+     *
+     * @param employeeid inputs an employeeid
+     * @param employee inputs an employee object
+     *                 sets the correct collection and updates the document with the same employeeid
+     */
     public void updateEmployee(int employeeid, Employee employee) {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
             getCollection("Anställd");
@@ -139,6 +150,12 @@ public class DbHandler {
         collection.replaceOne(doc, employee.toDocument());
     }
 
+    /**
+     *
+     * @param customerId inputs a customerId
+     * @param customer inputs a customer object
+     *                 sets the correct collection and updates the document with the same customerId
+     */
     public void updateCustomer(int customerId, Customer customer) {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")){
             getCollection("Kund");
@@ -147,6 +164,7 @@ public class DbHandler {
         collection.replaceOne(doc, customer.toDocument());
     }
 }
+
 
 
 

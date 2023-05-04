@@ -1,5 +1,6 @@
 public class MongoFacade {
 
+
     Keyreader keyreader = new Keyreader("Pass");
     String connectionString = "mongodb+srv://emilsivertsson:"+keyreader.getPasscode()+"@homecluster.ekna2wp.mongodb.net/?retryWrites=true&w=majority";
 

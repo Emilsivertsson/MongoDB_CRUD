@@ -3,7 +3,6 @@ abstract class Person {
     private final int age;
     private final String address;
 
-
     public Person(String name, int age, String address) {
         this.name = name;
         this.age = age;
@@ -14,21 +13,13 @@ abstract class Person {
         return name;
     }
 
-
-
     public int getAge() {
         return age;
     }
 
-
-
     public String getAddress() {
         return address;
     }
-
-
-
-
 
     @Override
     public String toString() {
