@@ -17,6 +17,13 @@ public class MongoFacade {
         dbHandler.insertCustomer(customer);
     }
 
+    public boolean checkIfCustomerExists(int customerId) {
+        return dbHandler.checkIfCustomerExists(customerId);
+    }
+
+    public boolean checkIfEmployeeExists(int employeeId) {
+        return dbHandler.checkIfEmployeeExists(employeeId);
+    }
 
     public void addEmployee(Employee employee) {
         dbHandler.insertEmployee(employee);

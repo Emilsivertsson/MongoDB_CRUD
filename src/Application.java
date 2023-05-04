@@ -1,4 +1,5 @@
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Application {
@@ -39,51 +40,90 @@ public class Application {
     }
 
     private void updateEmployees() {
+        String name;
+        int age;
+        String address;
+        int id;
         mongoFacade.listAllEmployees();
-        System.out.println("Enter employee id that you want to update: ");
-        int employeeid = Integer.parseInt(scanner.nextLine());
-
-        System.out.println("Enter new name: ");
-        String name = scanner.nextLine();
-        System.out.println("Enter new age: ");
-        int age = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter new address: ");
-        String address = scanner.nextLine();
-        Employee employee = new Employee(name, age, address, employeeid);
-        mongoFacade.updateEmployees(employeeid, employee);
+        try {
+            System.out.println("Enter id that you want to update: ");
+            id = Integer.parseInt(scanner.nextLine());
+            if(mongoFacade.checkIfEmployeeExists(id)){
+                System.out.println("Employee does not exist");
+            } else{
+                System.out.println("Enter new name: ");
+                name = scanner.nextLine();
+                System.out.println("Enter new age: ");
+                age = Integer.parseInt(scanner.nextLine());
+                System.out.println("Enter new address: ");
+                address = scanner.nextLine();
+                Employee employee = new Employee(name, age, address, id);
+                mongoFacade.updateEmployees(id, employee);
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Wrong input");
+        }
     }
 
     private void updateCustomer() {
+        String name;
+        int age;
+        String address;
+        int Id;
         mongoFacade.listAllCustomers();
-        System.out.println("Enter customer id that you want to update: ");
-        int customerId = Integer.parseInt(scanner.nextLine());
-
-        System.out.println("Enter new name: ");
-        String name = scanner.nextLine();
-        System.out.println("Enter new age: ");
-        int age = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter new address: ");
-        String address = scanner.nextLine();
-        Customer customer = new Customer(name, age, address, customerId);
-        mongoFacade.updateCustomer(customerId, customer);
-
+        try {
+            System.out.println("Enter id that you want to update: ");
+            Id = Integer.parseInt(scanner.nextLine());
+            if(mongoFacade.checkIfCustomerExists(Id)){
+                System.out.println("Customer does not exist");
+            }else{
+                System.out.println("Enter new name: ");
+                name = scanner.nextLine();
+                System.out.println("Enter new age: ");
+                age = Integer.parseInt(scanner.nextLine());
+                System.out.println("Enter new address: ");
+                address = scanner.nextLine();
+                Customer customer = new Customer(name, age, address, Id);
+                mongoFacade.updateCustomer(Id, customer);
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Wrong input");
+        }
 
     }
 
     private void deleteEmployees() {
+        int id = 0;
         mongoFacade.listAllEmployees();
         System.out.println("Enter employee id that you want to delete: ");
-        int id = Integer.parseInt(scanner.nextLine());
-        mongoFacade.deleteEmployees(id);
-        System.out.println("Employee deleted");
+        try {
+            id = Integer.parseInt(scanner.nextLine());
+        } catch (InputMismatchException e) {
+            System.out.println("Wrong input");
+        }
+        if (mongoFacade.checkIfEmployeeExists(id)) {
+            System.out.println("Employee does not exist");
+        } else {
+            mongoFacade.deleteEmployees(id);
+            System.out.println("Employee deleted");
+        }
     }
-
     private void deleteCustomer() {
+        int id= 0;
         mongoFacade.listAllCustomers();
         System.out.println("Enter customer id that you want to delete: ");
-        int id = Integer.parseInt(scanner.nextLine());
-        mongoFacade.deleteCustomer(id);
-        System.out.println("Customer deleted");
+        try {
+            id = Integer.parseInt(scanner.nextLine());
+        } catch (InputMismatchException e) {
+            System.out.println("Wrong input");
+        }
+        if(mongoFacade.checkIfCustomerExists(id)){
+            System.out.println("Customer does not exist");
+        }else{
+            mongoFacade.deleteCustomer(id);
+            System.out.println("Customer deleted");
+        }
+
     }
 
     private void addEmployee() {
@@ -98,14 +138,17 @@ public class Application {
                 String address = scanner.nextLine();
                 System.out.println("Enter employee id: ");
                 int employeeId = Integer.parseInt(scanner.nextLine());
-                Employee emp = new Employee(name, age, address, employeeId);
-                //TODO kolla så inte id redan finns
-                mongoFacade.addEmployee(emp);
+                if(mongoFacade.checkIfEmployeeExists(employeeId)){
+                    System.out.println("Employee-id already exists");
+                    break;
+                } else {
+                    Employee emp = new Employee(name, age, address, employeeId);
+                    mongoFacade.addEmployee(emp);
+                }
             } catch (Exception e) {
                 System.out.println("Invalid input, please try again");
                 break;
             }
-
             System.out.println("Employee added");
             System.out.println("Add another employee? (y/n)");
             String answer = scanner.nextLine();
@@ -113,8 +156,6 @@ public class Application {
                 add = false;
             }
         }
-
-
     }
 
     private void addCustomer() {
@@ -129,9 +170,13 @@ public class Application {
                 String address = scanner.nextLine();
                 System.out.println("Enter customer id: ");
                 int customerId = Integer.parseInt(scanner.nextLine());
-                Customer cust = new Customer(name, age, address, customerId);
-                //TODO kolla så inte id redan finns
-                mongoFacade.addCustomer(cust);
+                if(mongoFacade.checkIfCustomerExists(customerId)){
+                    System.out.println("Customer-id already exists");
+                    break;
+                } else {
+                    Customer cust = new Customer(name, age, address, customerId);
+                    mongoFacade.addCustomer(cust);
+                }
             } catch (Exception e){
                 System.out.println("Invalid input, please try again");
                 break;
@@ -144,6 +189,8 @@ public class Application {
             }
         }
 
-
     }
+
+
+
 }

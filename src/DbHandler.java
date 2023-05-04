@@ -111,7 +111,35 @@ public class DbHandler {
         //skriv ut alla i collection
         for (Document res : result) {
             System.out.println(res.toJson());
+        }
 
+    }
+
+    public boolean checkIfCustomerExists(int customerId) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")){
+            getCollection("Kund");
+        }
+        Document doc = new Document("customerId", customerId);
+        long amount = collection.countDocuments(doc);
+        if(amount == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean checkIfEmployeeExists(int employeeId) {
+        if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
+            getCollection("Anställd");
+        }
+        Document doc = new Document("employeeId", employeeId);
+        long amount = collection.countDocuments(doc);
+        if(amount == 0){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
