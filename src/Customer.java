@@ -11,36 +11,20 @@ public class Customer extends Person {
         return customerId;
     }
 
-
-
+    /**
+     * adapeter method to convert Customer to Document
+     * @return document with Customer info
+     */
     public Document toDocument(){
         return new Document("name", getName())
                 .append("age", getAge())
                 .append("adress", getAddress())
                 .append("customerId", getCustomerId());
-
     }
 
-    public static Customer fromdocument(Document doc){
 
-        return new Customer(
-                doc.getString("name"),
-                doc.getInteger("age"),
-                doc.getString("adress"),
-                doc.getInteger("customerId")
-        );
 
-    }
 
-    public static Customer fromJson (String json){
-        Document doc = Document.parse(json);
-        return fromdocument(doc);
 
-    }
-    public String toJson(){
-
-        return toDocument().toJson();
-
-    }
 }
 

@@ -12,34 +12,14 @@ public class Employee extends Person{
         return employeeId;
     }
 
-
+    /**
+     * adapeter method to convert Employee to Document
+     * @return document with Employee info
+     */
     public Document toDocument(){
         return new Document("name", getName())
                 .append("age", getAge())
                 .append("adress", getAddress())
                 .append("customerId", getEmployeeId());
-
-    }
-
-    public static Employee fromdocument(Document doc){
-
-        return new Employee(
-                doc.getString("name"),
-                doc.getInteger("age"),
-                doc.getString("adress"),
-                doc.getInteger("customerId")
-        );
-
-    }
-
-    public static Employee fromJson (String json){
-        Document doc = Document.parse(json);
-        return fromdocument(doc);
-
-    }
-    public String toJson(){
-
-        return toDocument().toJson();
-
     }
 }

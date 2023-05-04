@@ -1,8 +1,9 @@
 import java.io.FileInputStream;
 import java.util.Properties;
-
+// Keyreader to get the password from a local textfile
 public class Keyreader {
 
+    //initiate properties
     Properties props;
 
     public Keyreader(String file){

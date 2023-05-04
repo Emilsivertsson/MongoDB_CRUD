@@ -1,5 +1,6 @@
 public class MongoFacade {
 
+
     Keyreader keyreader = new Keyreader("Pass");
     String connectionString = "mongodb+srv://emilsivertsson:"+keyreader.getPasscode()+"@homecluster.ekna2wp.mongodb.net/?retryWrites=true&w=majority";
 
@@ -17,13 +18,6 @@ public class MongoFacade {
         dbHandler.insertCustomer(customer);
     }
 
-    public boolean checkIfCustomerExists(int customerId) {
-        return dbHandler.checkIfCustomerExists(customerId);
-    }
-
-    public boolean checkIfEmployeeExists(int employeeId) {
-        return dbHandler.checkIfEmployeeExists(employeeId);
-    }
 
     public void addEmployee(Employee employee) {
         dbHandler.insertEmployee(employee);
