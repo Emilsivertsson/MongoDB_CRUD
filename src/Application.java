@@ -11,9 +11,8 @@ public class Application {
 
     //application start
     public void start(){
-        boolean run = true;
 
-        while (run){
+        while (true){
             Menu.mainMenu();
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
@@ -28,7 +27,6 @@ public class Application {
                 case 9 -> {
                     Menu.exit();
                     System.exit(0);
-                    run = false;
                 } default -> System.out.println("Invalid input, please try again");
             }
         }
