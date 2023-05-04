@@ -85,7 +85,6 @@ public class DbHandler {
         collection.insertOne(newemployee);
     }
 
-
     /**
      *  sets the correct collection and prints all documents in that collection
      */
@@ -93,9 +92,7 @@ public class DbHandler {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")){
             getCollection("Kund");
         }
-
         FindIterable<Document> result = collection.find();
-        //skriv ut alla i collection
         for (Document res : result) {
             System.out.println(res.toJson());
         }
@@ -108,15 +105,10 @@ public class DbHandler {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
             getCollection("Anställd");
         }
-
-        //hämta alla i collection
         FindIterable<Document> result = collection.find();
-
-        //skriv ut alla i collection
         for (Document res : result) {
             System.out.println(res.toJson());
         }
-
     }
 
 
