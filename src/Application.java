@@ -27,8 +27,9 @@ public class Application {
                 case 8 -> listAllEmployees();
                 case 9 -> {
                     Menu.exit();
+                    System.exit(0);
                     run = false;
-                }
+                } default -> System.out.println("Invalid input, please try again");
             }
         }
     }

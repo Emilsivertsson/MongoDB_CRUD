@@ -13,4 +13,8 @@ public class Menu {
         System.out.println("9. exit");
     }
 
+    public static void exit() {
+        System.out.println("Thank you for exiting throu the giftshop!");
+
+    }
 }
