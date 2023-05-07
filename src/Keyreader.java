@@ -13,7 +13,6 @@ public class Keyreader {
         String userHome = System.getProperty("user.home");
 
         try {
-            //hämta textfilen kolla så den inte ligger i onedrive
             FileInputStream input = new FileInputStream(userHome + "/Documents/Pass/" + file +".txt");
             props.load(input);
 
@@ -23,7 +22,7 @@ public class Keyreader {
 
     }
     public String getPasscode(){
-        //läs nycklen som finns i filen
+        //Return the password that under parameter key
         return props.getProperty("Pass");
 
     }

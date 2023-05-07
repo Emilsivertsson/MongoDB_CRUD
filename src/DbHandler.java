@@ -92,9 +92,9 @@ public class DbHandler {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Anställd")){
             getCollection("Kund");
         }
-        FindIterable<Document> result = collection.find();
-        for (Document res : result) {
-            System.out.println(res.toJson());
+        MongoCursor<Document> result = collection.find().iterator();
+        while (result.hasNext()) {
+            System.out.println(result.next().toJson());
         }
     }
 
@@ -105,11 +105,13 @@ public class DbHandler {
         if (collection == null || collection.getNamespace().getCollectionName().equals("Kund")){
             getCollection("Anställd");
         }
-        FindIterable<Document> result = collection.find();
-        for (Document res : result) {
-            System.out.println(res.toJson());
+        MongoCursor<Document> result = collection.find().iterator();
+        while (result.hasNext()) {
+            System.out.println(result.next().toJson());
         }
     }
+
+
 
 
     /**

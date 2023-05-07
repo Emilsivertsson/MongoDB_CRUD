@@ -13,7 +13,7 @@ public class Employee extends Person{
     }
 
     /**
-     * adapeter method to convert Employee to Document
+     * adapter method to convert Employee to Document
      * @return document with Employee info
      */
     public Document toDocument(){
