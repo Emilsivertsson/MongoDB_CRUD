@@ -1,9 +1,7 @@
 # MongoDB_CRUD
-School weekly challange
+School weekly challange to practice using a MongoDBserver.
 
-#MongoDB med CRUD
-
-##Explaination for used MongoDB commands:
+## Explaination for used MongoDB commands:
 + collection.insertOne() - Inserts a single document into a collection.
 
 + collection.find() - Returns all documents in a collection.
@@ -13,3 +11,4 @@ School weekly challange
 + collection.findOneAndDelete() - takes a filter object and deletes its matching document.
 
 + getCollection('collectionName') - Gets a collection from the database.
+
