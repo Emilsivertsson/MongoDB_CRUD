@@ -3,8 +3,9 @@ School weekly challenge to practice using a MongoDBserver.<br>
 The program has a very simple menu that allows the user to create, read, update, and delete documents from a MongoDB database.
 
 ### To use this program you will need to install the following libraries:
-+ slf4j-api-2.0.7.jar
-+ mongodb-jdbc-2.0.2-all.jar
++ [slf4j-api-2.0.7.jar](https://mvnrepository.com/artifact/org.slf4j/slf4j-api/2.0.7)
++ [mongodb-jdbc-2.0.2-all.jar](https://jar-download.com/?search_box=mongodb-jdbc)
+
 
 ### Program functionality:
 The program prints a meny for the user, and asks for input. 
