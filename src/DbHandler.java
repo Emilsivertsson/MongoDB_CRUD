@@ -10,11 +10,21 @@ public class DbHandler {
 
     MongoCollection<Document> collection = null;
 
-
+    /**
+     * @param connString inputs connection string
+     *                   Connects to the database named Person
+     *                   if not specified
+     */
     public DbHandler(String connString) {
         Connect(connString, "Person");
     }
 
+    /**
+     * @param connString inputs connection string
+     *                   Connects to the database
+     * @param dbname     inputs name of database
+     *
+     */
     public DbHandler(String connString, String dbname) {
         Connect(connString, dbname);
     }
@@ -25,26 +35,40 @@ public class DbHandler {
      *                   Connects to the database
      */
     public void Connect(String connString, String myDatabase) {
-        if (connString == null) {
-            connString = "mongodb://localhost:27017";
-        }
 
-        //tells mongodb which version of server api we are using
+        // Tells mongodb which version of server api we are using
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
 
-        //sets the settings for the connection
+        // Sets the settings for the initial connection attempt
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(new ConnectionString(connString))
                 .serverApi(serverApi)
                 .build();
 
-        // Create a new client and with the settings and connect to the server and our database
-        MongoClient mongoClient = MongoClients.create(settings);
-        db = mongoClient.getDatabase("Person");
+        // Create a new client and try to connect to the server
+        //if the connection fails, try to connect to the fallback local URL
+        try {
+            MongoClient mongoClient = MongoClients.create(settings);
+            db = mongoClient.getDatabase(myDatabase);
+        } catch (MongoException e) {
+            System.out.println("Initial connection failed. Attempting to connect to fallback URL.");
+            // Fallback connection string
+            String fallbackConnString = "mongodb://localhost:27017";
 
+            // Sets the settings for the fallback connection
+            MongoClientSettings fallbackSettings = MongoClientSettings.builder()
+                    .applyConnectionString(new ConnectionString(fallbackConnString))
+                    .serverApi(serverApi)
+                    .build();
+
+            // Create a new client and connect to the fallback URL and the specified database
+            MongoClient fallbackClient = MongoClients.create(fallbackSettings);
+            db = fallbackClient.getDatabase(myDatabase);
+        }
     }
+
 
     /**
      * @param collectionName inputs name of collection you want to fetch
